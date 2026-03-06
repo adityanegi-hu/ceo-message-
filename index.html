@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+  <title>Messages — Tech CEOs</title>
+  <link rel="stylesheet" href="./base.css">
+  <link rel="stylesheet" href="./style.css">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <!-- ===== ONBOARDING ===== -->
+  <div class="onboarding" id="onboarding">
+    <div class="onboarding-icon">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+    </div>
+    <h2>CEO Messages</h2>
+    <p>Chat with the world's most influential tech leaders. Powered by Claude or GPT.</p>
+
+    <div class="onboarding-form">
+      <select id="providerSelect" class="onboarding-select">
+        <option value="anthropic">Anthropic (Claude)</option>
+        <option value="openai">OpenAI (GPT-4o)</option>
+      </select>
+      <input type="password" id="apiKeyInput" class="onboarding-input" placeholder="sk-ant-... or sk-..." autocomplete="off" spellcheck="false">
+      <div class="onboarding-hint">Your key is stored in memory only and sent securely per request. Never saved to disk.</div>
+    </div>
+
+    <button class="onboarding-btn" id="startBtn">Start Chatting</button>
+    <div class="user-id-display" id="userIdDisplay"></div>
+  </div>
+
+  <!-- ===== CONTACTS VIEW ===== -->
+  <div class="view active" id="contactsView">
+    <div class="contacts-header">
+      <div class="contacts-header-top">
+        <button class="header-btn theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        </button>
+        <button class="header-btn" id="settingsBtn" aria-label="Settings">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+      </div>
+      <h1>Messages</h1>
+      <div class="search-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <input type="text" placeholder="Search" id="searchInput">
+      </div>
+    </div>
+    <div class="contacts-list" id="contactsList"></div>
+  </div>
+
+  <!-- ===== CHAT VIEW ===== -->
+  <div class="view hidden-right" id="chatView">
+    <div class="chat-header">
+      <button class="back-btn" id="backBtn" aria-label="Back to messages">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <div class="chat-header-center">
+        <img class="chat-header-avatar" id="chatAvatar" src="" alt="">
+        <span class="chat-header-name" id="chatName"></span>
+      </div>
+      <button class="clear-chat-btn" id="clearChatBtn" aria-label="Clear conversation" title="Clear conversation">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="messages-container" id="messagesContainer">
+      <div class="empty-chat" id="emptyChat">
+        <img class="empty-chat-avatar" id="emptyChatAvatar" src="" alt="">
+        <h3 id="emptyChatName"></h3>
+        <p id="emptyChatHint">Send a message to start the conversation</p>
+      </div>
+    </div>
+
+    <div class="typing-indicator" id="typingIndicator">
+      <span class="typing-dot"></span>
+      <span class="typing-dot"></span>
+      <span class="typing-dot"></span>
+    </div>
+
+    <div class="input-bar">
+      <div class="input-wrapper">
+        <textarea id="messageInput" rows="1" placeholder="iMessage" enterkeyhint="send"></textarea>
+        <button class="send-btn" id="sendBtn" aria-label="Send message">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SETTINGS MODAL ===== -->
+  <div class="settings-modal" id="settingsModal">
+    <div class="settings-sheet">
+      <div class="settings-header">
+        <h3>Settings</h3>
+        <button class="settings-close-btn" id="settingsClose">Done</button>
+      </div>
+      <div class="settings-body">
+        <label class="settings-label">AI Provider</label>
+        <select id="settingsProvider" class="settings-select">
+          <option value="anthropic">Anthropic (Claude Sonnet)</option>
+          <option value="openai">OpenAI (GPT-4o)</option>
+        </select>
+        <label class="settings-label">API Key</label>
+        <input type="password" id="settingsApiKey" class="settings-input" placeholder="sk-ant-... or sk-..." autocomplete="off" spellcheck="false">
+        <p class="settings-hint">Your key stays in browser memory. It's never stored on disk or logged.</p>
+        <button class="settings-save-btn" id="settingsSave">Save</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="./app.js"></script>
+</body>
+</html>
