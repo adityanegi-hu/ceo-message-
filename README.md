@@ -1,4 +1,4 @@
-                                                  # CEO Messages
+                                                     # CEO Messages
 
 An iMessage-style web app where you can chat with “tech CEO” personas (Elon, Tim, Sam, Satya, etc.) using **Anthropic (Claude)** or **OpenAI (GPT-4o)**.
 
